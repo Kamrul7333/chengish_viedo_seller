@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Video Store</title>
+    <!-- Google Fonts for Premium look -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --telegram-bg: #0e1621;
+            --telegram-card: #182533;
+            --telegram-blue: #2481cc;
+            --telegram-blue-hover: #2895e7;
+            --text-color: #ffffff;
+            --text-muted: #7f91a4;
+            --accent-color: #e53935;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Hind Siliguri', sans-serif;
+        }
+
+        body {
+            background-color: var(--telegram-bg);
+            color: var(--text-color);
+            padding: 20px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+        }
+
+        /* Section Styling */
+        .section-box {
+            background-color: var(--telegram-card);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--telegram-blue);
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Seller Profile Display */
+        .seller-profile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .seller-avatar {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(45deg, #0088cc, #00c6ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin-bottom: 15px;
+            box-shadow: 0 0 20px rgba(36, 129, 204, 0.4);
+        }
+
+        .seller-name {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .seller-tag {
+            font-size: 14px;
+            color: var(--telegram-blue);
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--telegram-blue);
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn:hover {
+            background-color: var(--telegram-blue-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(36, 129, 204, 0.4);
+        }
+
+        /* Image Grid Group */
+        .image-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .image-group img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 2px solid rgba(255,255,255,0.1);
+            transition: transform 0.2s;
+        }
+
+        /* Video Grid Settings */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+        }
+
+        .video-card {
+            background-color: rgba(0,0,0,0.2);
+            border-radius: 10px;
+            padding: 8px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* Fake Video Thumbnail Preview with Play Icon */
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Ratio */
+            background: #050b11;
+            border-radius: 6px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .video-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, rgba(24,37,51,0.2) 0%, rgba(14,22,33,0.7) 100%);
+            z-index: 1;
+        }
+
+        .video-wrapper::after {
+            content: '\f144';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            font-size: 28px;
+            color: rgba(255, 255, 255, 0.85);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.2s ease;
+            z-index: 2;
+        }
+
+        .video-wrapper:hover::after {
+            color: var(--telegram-blue);
+            font-size: 34px;
+        }
+
+        .video-caption {
+            margin-top: 8px;
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* Pricing Details Box */
+        .pricing-box {
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(135deg, #1c2d3d 0%, #182533 100%);
+            border: 2px solid rgba(36, 129, 204, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-box::before {
+            content: 'SPECIAL';
+            position: absolute;
+            top: 15px;
+            right: -30px;
+            background: var(--accent-color);
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 4px 30px;
+            transform: rotate(45deg);
+        }
+
+        .price-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffdd67;
+            margin-bottom: 10px;
+        }
+
+        .price-sub {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        /* Lightbox/Modal for Fullscreen Video */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            position: relative;
+            width: 90%;
+            max-width: 750px;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0,0,0,0.7);
+        }
+
+        .modal-content iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: -45px;
+            right: 0;
+            color: white;
+            font-size: 35px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close-modal:hover {
+            color: var(--accent-color);
+        }
+
+        /* Footer View Counter */
+        .footer-counter {
+            margin-top: 20px;
+            padding: 15px;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 480px) {
+            .image-group {
+                grid-template-columns: 1fr;
+            }
+            .video-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- 1 & 2. Seller Section -->
+    <div class="section-box">
+        <div class="seller-profile">
+            <div class="seller-avatar">
+                <i class="fab fa-telegram-plane"></i>
+            </div>
+            <div class="seller-name">Premium Channel Seller</div>
+            <div class="seller-tag">@GENGHIS_KHA_N</div>
+            <a href="https://t.me/GENGHIS_KHA_N?text=%E0%A6%86%E0%A6%AE%E0%A6%BF%20%E0%A6%9A%E0%A7%8Props%E0%A6%A8%E0%A7%87%E0%A6%B2%20%E0%A6%95%E0%A6%BF%E0%A6%A8%E0%A6%A4%E0%A7%87%20%E0%A6%9A%E0%A6%BE%E0%A6%8Blocks" class="btn" target="_blank">
+                <i class="fas fa-comment-alt"></i> সেলার এর সাথে সরাসরি কথা বলুন
+            </a>
+        </div>
+    </div>
+
+    <!-- 3. Image Demo Group -->
+    <div class="section-box">
+        <div class="section-title"><i class="fas fa-images"></i> ভিডিও গ্রুপ এর ডেমো</div>
+        <div class="image-group">
+            <img src="https://i.ibb.co.com/KcBYgVD9/IMG-20260712-160302-382.jpg" alt="Demo Image 1" />
+            <img src="https://i.ibb.co.com/cS29jr1V/IMG-20260712-160302-896.jpg" alt="Demo Image 2" />
+        </div>
+    </div>
+
+    <!-- 4. General Video Demo Grid (Updated Iframe Links) -->
+    <div class="section-box">
+        <div class="section-title"><i class="fas fa-video"></i> ভিডিও গ্রুপ এর ডেমো</div>
+        <div class="video-grid">
+            
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://www.blogger.com/video.g?token=AD6v5dzwV2wnfI1-pFxo5X1radCeF48PxaJTxoO1cTfb6sN95z9py62eQi8dLbWaMcEQX-TJhmWpBZkZyiQ17gGpxuDSAsmfPpNlQ6T6eejuhJT910KIw8v7VQ7AcLjs1NHGR2ULwcQ&amp;origin=sampleforwork733.blogspot.com')"></div>
+                <div class="video-caption">ডেমো ভিডিও-১</div>
+            </div>
+
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://www.blogger.com/video.g?token=AD6v5dziERDnOV5OoII9ocwi1a0DSLP77GbdzZYlW7wkhL1X2oLQU_8W5RKixLEdUHNxLBvj_9OPB53ZpczSQWwJ_7XQiSsQNeOg4OTgfPSv2ZewZGV1wJqpqcRod2634dC-ySwaFbwc&amp;origin=sampleforwork733.blogspot.com')"></div>
+                <div class="video-caption">ডেমো ভিডিও-২</div>
+            </div>
+
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://www.blogger.com/video.g?token=AD6v5dxwByCiNQJDgZz5hQ-b2Py_8E41VhQmq2Q91pip3lltJXnjag5Y9LqNXrv6PllEntqFO3Y1mwJBe92bDbZ6_SF-mkAJedY7WsR7jWK1K58JhVYzR9pIGNYgXh7O98w3lM7tWV34&amp;origin=sampleforwork733.blogspot.com')"></div>
+                <div class="video-caption">ডেমো ভিডিও-৩</div>
+            </div>
+
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://www.blogger.com/video.g?token=AD6v5dxk0NeOjCN9ZVDUbbNRoFLludif4ZMnc-SxWW62yJdnAN7olp5xUeQAQqBm3M6bjuVjfFiyg_zj6Hr9gYOKSwpJDPSToj4CRZaKUfrv6MgJ8c2CUi9_IzpLppEes6wzKQQTRA&amp;origin=sampleforwork733.blogspot.com')"></div>
+                <div class="video-caption">ডেমো ভিডিও-৪</div>
+            </div>
+
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://www.blogger.com/video.g?token=AD6v5dxdwi3Z8gIN1_xg1Mw0-vcINH7Q2gXQ047OVQEL0cLESukiPWg9tjlKTk5L4ZpuGPiFZsTFFMu7ZvoTILwNn_cY92W_xp-q-HURDx54q-dR4O02s259uOBLB1LYkCtV2qTZxw0&amp;origin=sampleforwork733.blogspot.com')"></div>
+                <div class="video-caption">ডেমো ভিডিও-৫</div>
+            </div>
+
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://www.blogger.com/video.g?token=AD6v5dx3Z2YrXFLOdv2D-NNK6HQzd7YalDswK9UzdJER5hB89bNlEoZ0Rr6oBmpiWn9bRpvp22UL5R58_BLImm8WQLbQTI-VOsSlIHMYgwFn7-r0TlJVavCFzYYXxNiy-kMnoQtR6d8&amp;origin=sampleforwork733.blogspot.com')"></div>
+                <div class="video-caption">ডেমো ভিডিও-৬</div>
+            </div>
+
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://www.blogger.com/video.g?token=AD6v5dylsbHyk6AsUT2F5PwG9vFJn1lvzumkaTZaZ6BoUg0X6QvrSzfPJiFKGSFO5H1YbPhloHxMR1YT-s9-ne_HM2CLofsIsuVhgfpGWEjAmQomylIvRn-Avawf_AD1hMVode3sRTla&amp;origin=sampleforwork733.blogspot.com')"></div>
+                <div class="video-caption">ডেমো ভিডিও-৭</div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 5. Kids Special Video Demo Grid (Updated Iframe Links) -->
+    <div class="section-box">
+        <div class="section-title"><i class="fas fa-baby"></i> বাচ্চাদের স্পেশাল ডেমো ভিডিও</div>
+        <div class="video-grid">
+            
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://www.blogger.com/video.g?token=AD6v5dxADVhdhaAzgdKD_CaJ_TIISGdHltS6PoeOPdXGlHAar_DDEZgznmzXOYU3pHb2FU07lQTJm2zWDj4PXnUuq98UMXXrddsDWfGKD2ZR4KXH6l50V8Le15IOsi7Xk4xpGYeMHSI&amp;origin=sampleforwork733.blogspot.com')"></div>
+                <div class="video-caption">ডেমো ভিডিও-১</div>
+            </div>
+
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://www.blogger.com/video.g?token=AD6v5dwX89MvAGp9bF47wfSmRZpRmWbVIWZQ65sSaZVBHdajWEW8xsbcqxcFfv7heZFV0OZYtW7tmURmj_Aivx7CxalqWTNYBEov3ewpS0o7lHjSGrjQv_CbrimlnmqnM-v5RWcZxe4&amp;origin=sampleforwork733.blogspot.com')"></div>
+                <div class="video-caption">ডেমো ভিডিও-২</div>
+            </div>
+
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://www.blogger.com/video.g?token=AD6v5dyf0Neo2j4uy4mtHSjrVfYOXDfPIZNtmo5gjxwG_H5vcQXbnf1kAJEaMqDnFk1O08A6zV16lpHrrO5sNwbs6KitcpKdwrS7pSCWdUDR1u6Td39mwgB1xSG94hw9At11FnGkz7FN&amp;origin=sampleforwork733.blogspot.com')"></div>
+                <div class="video-caption">ডেমো ভিডিও-৩</div>
+            </div>
+
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://www.blogger.com/video.g?token=AD6v5dwcYRnaRnSSgPiUCyS9aHyCiJNM9wBXGqbc3SKrVPYXrKjBs7OAtePDxykNIrGaqdGq75nX8sGpQjyc6A_kbrO47PNuGJv2GuHqtqSrYVtRrXOEMuYy8Qqmdty7zwycdWxsrVs&amp;origin=sampleforwork733.blogspot.com')"></div>
+                <div class="video-caption">ডেমো ভিডিও-৪</div>
+            </div>
+
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://www.blogger.com/video.g?token=AD6v5dwEUsY1sh4rIi-6fjUswGoVXDkDWgEhTlEtWYXK0fCo0DSTW0q_L2HlN08mPxepwklcgfpITSwZEWsgmQJNdnfLrSQXdmtxYNGUEQXqUhofulpImN6HQl6toQvRK4MOU6z7ODA&amp;origin=sampleforwork733.blogspot.com')"></div>
+                <div class="video-caption">ডেমো ভিডিও-৫</div>
+            </div>
+
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://www.blogger.com/video.g?token=AD6v5dxylnLWlRgx3N6-_82kj_rrOd_AppG11YcYneM-7KNA1ZYBoFd6hSxjy919so58q8ZhPkp8TgAnj1kfwa5z_uV20ApXCquYAiO8y-Kplt8srx978j6IqNdPgTVFfYFj7TEvQ824&amp;origin=sampleforwork733.blogspot.com')"></div>
+                <div class="video-caption">ডেমো ভিডিও-৬</div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 6 & 7. Pricing Details Box -->
+    <div class="section-box pricing-box">
+        <div class="price-title">লাইফটাইম ভিডিও প্যাকেজ মাত্র ৪৯৯ টাকা</div>
+        <div class="price-sub">সীমাবদ্ধ সময়ের অফার! এখনই বুক করুন।</div>
+        <a href="https://t.me/Genghis_Khan5?text=%E0%A6%86%E0%A6%AE%E0%A6%BF%20%E0%A6%B2%E0%A6%BE%E0%A6%87%E0%A6%AB%E0%A6%9F%E0%A6%BE%E0%A6%8Thread%20%E0%A6%AA%E0%A7%8Props%E0%A6%95%E0%A7%87%E0%A6%9C%20%E0%A6%95%E0%A6%BF%E0%A6%A8%E0%A6%A4%E0%A7%87%20%E0%A6%9A%E0%A6%BE%E0%A6%8Blocks" class="btn" target="_blank">
+            <i class="fas fa-shopping-cart"></i> কেনার জন্য ক্লিক করুন
+        </a>
+    </div>
+
+    <!-- 9. View Counter Area -->
+    <div class="footer-counter">
+        <div align=center><a href='https://www.counter12.com'><img src='https://www.counter12.com/img-7c9Z9YD180Wa0a01-61.gif' border='0' alt='conter12'></a><script type='text/javascript' src='https://www.counter12.com/ad.js?id=7c9Z9YD180Wa0a01'></script></div>
+    </div>
+
+</div>
+
+<!-- Lightbox Modal Screen (Fullscreen Playback Fix) -->
+<div class="modal" id="videoModal" onclick="closeVideo()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <span class="close-modal" onclick="closeVideo()">&times;</span>
+        <div id="modalVideoContainer" style="width:100%; height:100%;"></div>
+    </div>
+</div>
+
+<script>
+    // Handles dynamic full screen view with the valid token source
+    function openVideo(videoUrl) {
+        const modal = document.getElementById('videoModal');
+        const container = document.getElementById('modalVideoContainer');
+        
+        // Injecting secure iframe inside popup modal
+        container.innerHTML = `<iframe src="${videoUrl}" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>`;
+        
+        modal.style.display = 'flex';
+    }
+
+    function closeVideo() {
+        const modal = document.getElementById('videoModal');
+        const container = document.getElementById('modalVideoContainer');
+        container.innerHTML = ''; // Stops the video sound immediately on exit
+        modal.style.display = 'none';
+    }
+</script>
+
+</body>
+</html>
