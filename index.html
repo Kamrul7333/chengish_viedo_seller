@@ -62,6 +62,86 @@
             gap: 10px;
         }
 
+        /* --- New Premium RGB & Glowing Description Box --- */
+        .rgb-description-box {
+            position: relative;
+            background-color: var(--telegram-card);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        /* Animated Thick RGB Border Effect */
+        .rgb-description-box::before {
+            content: '';
+            position: absolute;
+            top: -3px; left: -3px; right: -3px; bottom: -3px;
+            background: linear-gradient(45deg, #ff0055, #0099ff, #00ff66, #ffcc00, #ff0055);
+            background-size: 400%;
+            z-index: -1;
+            border-radius: 18px;
+            animation: rgb-glow 12s linear infinite;
+        }
+
+        /* Inner background masking to keep it clean */
+        .rgb-description-box::after {
+            content: '';
+            position: absolute;
+            top: 3px; left: 3px; right: 3px; bottom: 3px;
+            background-color: var(--telegram-card);
+            z-index: -1;
+            border-radius: 13px;
+        }
+
+        @keyframes rgb-glow {
+            0% { background-position: 0 0; }
+            50% { background-position: 300% 0; }
+            100% { background-position: 0 0; }
+        }
+
+        /* Premium Smooth Shimmer Text Effect (চমকানো হেডলাইন) */
+        .shimmer-headline {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-align: center;
+            background: linear-gradient(to right, #fff 20%, #4facfe 40%, #00f2fe 60%, #fff 80%);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: text-shine 3s linear infinite;
+        }
+
+        @keyframes text-shine {
+            to { background-position: 200% center; }
+        }
+
+        /* List Items inside Description Box */
+        .collection-list {
+            list-style: none;
+            padding-left: 5px;
+        }
+
+        .collection-list li {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 5px;
+        }
+
+        .collection-list li i {
+            color: #00ff66; /* Green indicator check icon */
+            font-size: 14px;
+        }
+
         /* Seller Profile Display */
         .seller-profile {
             display: flex;
@@ -310,6 +390,18 @@
         </div>
     </div>
 
+    <!-- NEW DESCRIPTION BOX WITH RGB BORDER & SHIMMER TEXT -->
+    <div class="rgb-description-box">
+        <div class="shimmer-headline">আমাদের কাছে আপনি যেসব কালেকশন পাচ্ছেন</div>
+        <ul class="collection-list">
+            <li><i class="fas fa-circle-check"></i> ১/ বাচ্চাদের 1000+ ভিডিও কালেকশন </li>
+            <li><i class="fas fa-circle-check"></i> ২/ দেশি ৫০০+ ভাইরাল হওয়া কালেকশন </li>
+            <li><i class="fas fa-circle-check"></i> ৩/ ৫০০+ রে*প ভিডিও কালেকশন </li>
+            <li><i class="fas fa-circle-check"></i> ৪/ ৫০০+ বিদেশি ভিডিও কালেকশন </li>
+            <li><i class="fas fa-circle-check"></i> ৫/ ১০০+ হি*জাবী ভিডিও কালেকশন</li>
+        </ul>
+    </div>
+
     <!-- 3. Image Demo Group -->
     <div class="section-box">
         <div class="section-title"><i class="fas fa-images"></i> ভিডিও গ্রুপ এর ডেমো</div>
@@ -319,7 +411,7 @@
         </div>
     </div>
 
-    <!-- 4. General Video Demo Grid (Updated Iframe Links) -->
+    <!-- 4. General Video Demo Grid -->
     <div class="section-box">
         <div class="section-title"><i class="fas fa-video"></i> ভিডিও গ্রুপ এর ডেমো</div>
         <div class="video-grid">
@@ -362,7 +454,7 @@
         </div>
     </div>
 
-    <!-- 5. Kids Special Video Demo Grid (Updated Iframe Links) -->
+    <!-- 5. Kids Special Video Demo Grid -->
     <div class="section-box">
         <div class="section-title"><i class="fas fa-baby"></i> বাচ্চাদের স্পেশাল ডেমো ভিডিও</div>
         <div class="video-grid">
@@ -416,7 +508,7 @@
 
 </div>
 
-<!-- Lightbox Modal Screen (Fullscreen Playback Fix) -->
+<!-- Lightbox Modal Screen -->
 <div class="modal" id="videoModal" onclick="closeVideo()">
     <div class="modal-content" onclick="event.stopPropagation()">
         <span class="close-modal" onclick="closeVideo()">&times;</span>
@@ -425,24 +517,12 @@
 </div>
 
 <script>
-    // Handles dynamic full screen view with the valid token source
     function openVideo(videoUrl) {
         const modal = document.getElementById('videoModal');
         const container = document.getElementById('modalVideoContainer');
-        
-        // Injecting secure iframe inside popup modal
         container.innerHTML = `<iframe src="${videoUrl}" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>`;
-        
         modal.style.display = 'flex';
     }
 
     function closeVideo() {
-        const modal = document.getElementById('videoModal');
-        const container = document.getElementById('modalVideoContainer');
-        container.innerHTML = ''; // Stops the video sound immediately on exit
-        modal.style.display = 'none';
-    }
-</script>
-
-</body>
-</html>
+ 
