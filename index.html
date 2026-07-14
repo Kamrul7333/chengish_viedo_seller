@@ -51,24 +51,13 @@
             border: 1px solid rgba(255,255,255,0.05);
         }
 
-        .section-title {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 15px;
-            border-bottom: 2px solid var(--telegram-blue);
-            padding-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        /* --- New Premium RGB & Glowing Description Box --- */
+        /* --- Premium RGB & Glowing Box Style --- */
         .rgb-description-box {
             position: relative;
             background-color: var(--telegram-card);
             border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 25px;
+            padding: 20px;
+            margin-bottom: 15px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
             overflow: hidden;
             z-index: 1;
@@ -78,7 +67,7 @@
         .rgb-description-box::before {
             content: '';
             position: absolute;
-            top: -3px; left: -3px; right: -3px; bottom: -3px;
+            top: -4px; left: -4px; right: -4px; bottom: -4px;
             background: linear-gradient(45deg, #ff0055, #0099ff, #00ff66, #ffcc00, #ff0055);
             background-size: 400%;
             z-index: -1;
@@ -90,10 +79,10 @@
         .rgb-description-box::after {
             content: '';
             position: absolute;
-            top: 3px; left: 3px; right: 3px; bottom: 3px;
+            top: 4px; left: 4px; right: 4px; bottom: 4px;
             background-color: var(--telegram-card);
             z-index: -1;
-            border-radius: 13px;
+            border-radius: 12px;
         }
 
         @keyframes rgb-glow {
@@ -106,7 +95,6 @@
         .shimmer-headline {
             font-size: 22px;
             font-weight: 700;
-            margin-bottom: 15px;
             text-align: center;
             background: linear-gradient(to right, #fff 20%, #4facfe 40%, #00f2fe 60%, #fff 80%);
             background-size: 200% auto;
@@ -120,7 +108,6 @@
             to { background-position: 200% center; }
         }
 
-        /* List Items inside Description Box */
         .collection-list {
             list-style: none;
             padding-left: 5px;
@@ -138,7 +125,7 @@
         }
 
         .collection-list li i {
-            color: #00ff66; /* Green indicator check icon */
+            color: #00ff66;
             font-size: 14px;
         }
 
@@ -198,26 +185,43 @@
             box-shadow: 0 5px 15px rgba(36, 129, 204, 0.4);
         }
 
-        /* Image Grid Group */
+        /* Sub-Content Outer Box Wrapper */
+        .content-group-box {
+            background-color: rgba(0, 0, 0, 0.15);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 35px;
+            border: 1px solid rgba(255,255,255,0.03);
+        }
+
+        /* Image Grid Group - ছবিগুলো ছোট করার জন্য এখানে পরিবর্তন করা হয়েছে */
         .image-group {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            justify-content: flex-start;
         }
 
         .image-group img {
-            width: 100%;
-            height: auto;
+            width: 80px;      /* থাম্বনেইল হিসেবে ছোট সাইজ */
+            height: 80px;     /* একদম নিখুঁত স্কয়ার শেপ */
+            object-fit: cover; /* ছবির ভেতরের অংশ ঠিক রাখার জন্য */
             border-radius: 8px;
-            border: 2px solid rgba(255,255,255,0.1);
-            transition: transform 0.2s;
+            border: 2px solid rgba(255,255,255,0.15);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .image-group img:hover {
+            transform: scale(1.08);
+            border-color: var(--telegram-blue);
         }
 
         /* Video Grid Settings */
         .video-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 12px;
         }
 
         .video-card {
@@ -253,7 +257,7 @@
             font-family: 'Font Awesome 6 Free';
             font-weight: 900;
             position: absolute;
-            font-size: 28px;
+            font-size: 26px;
             color: rgba(255, 255, 255, 0.85);
             top: 50%;
             left: 50%;
@@ -264,7 +268,7 @@
 
         .video-wrapper:hover::after {
             color: var(--telegram-blue);
-            font-size: 34px;
+            font-size: 32px;
         }
 
         .video-caption {
@@ -310,7 +314,7 @@
             margin-bottom: 20px;
         }
 
-        /* Lightbox/Modal for Fullscreen Video */
+        /* Lightbox/Modal for Fullscreen Media Viewer */
         .modal {
             display: none;
             position: fixed;
@@ -333,12 +337,29 @@
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 0 30px rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* ইমেজ ফুলস্ক্রিন দেখার সময় 16:9 রেশিও ফিক্স ভেঙে স্বাভাবিক রাখার জন্য */
+        .modal-content.img-mode {
+            aspect-ratio: auto;
+            max-height: 90%;
+            background: transparent;
         }
 
         .modal-content iframe {
             width: 100%;
             height: 100%;
             border: none;
+        }
+
+        .modal-content img {
+            max-width: 100%;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 6px;
         }
 
         .close-modal {
@@ -363,9 +384,6 @@
         }
 
         @media (max-width: 480px) {
-            .image-group {
-                grid-template-columns: 1fr;
-            }
             .video-grid {
                 grid-template-columns: 1fr 1fr;
             }
@@ -384,145 +402,401 @@
             </div>
             <div class="seller-name">Premium Channel Seller</div>
             <div class="seller-tag">@GENGHIS_KHA_N</div>
-            <a href="https://t.me/GENGHIS_KHA_N?text=%E0%A6%86%E0%A6%AE%E0%A6%BF%20%E0%A6%9A%E0%A7%8Props%E0%A6%A8%E0%A7%87%E0%A6%B2%20%E0%A6%95%E0%A6%BF%E0%A6%A8%E0%A6%A4%E0%A7%87%20%E0%A6%9A%E0%A6%BE%E0%A6%8Blocks" class="btn" target="_blank">
-                <i class="fas fa-comment-alt"></i> সেলার এর সাথে সরাসরি কথা বলুন
+            <a href="https://telegram.dog/GENGHIS_KHA_N? আমি ৪৯৯ টাকার প্যাকেজটি ক্রয় করতে চাই" class="btn" target="_blank">
+                <i class="fas fa-comment-alt"></i> কেনার জন্য সেলার এর সাথে সরাসরি কথা বলতে এখানে ক্লিক করুন 
             </a>
         </div>
     </div>
 
-    <!-- NEW DESCRIPTION BOX WITH RGB BORDER & SHIMMER TEXT -->
-    <div class="rgb-description-box">
+    <!-- MAIN DESCRIPTION BOX WITH RGB BORDER & SHIMMER TEXT -->
+    <div class="rgb-description-box" style="margin-bottom: 30px;">
         <div class="shimmer-headline">আমাদের কাছে আপনি যেসব কালেকশন পাচ্ছেন</div>
-        <ul class="collection-list">
-            <li><i class="fas fa-circle-check"></i> ১/ বাচ্চাদের 1000+ ভিডিও কালেকশন </li>
-            <li><i class="fas fa-circle-check"></i> ২/ দেশি ৫০০+ ভাইরাল হওয়া কালেকশন </li>
-            <li><i class="fas fa-circle-check"></i> ৩/ ৫০০+ রে*প ভিডিও কালেকশন </li>
-            <li><i class="fas fa-circle-check"></i> ৪/ ৫০০+ বিদেশি ভিডিও কালেকশন </li>
-            <li><i class="fas fa-circle-check"></i> ৫/ ১০০+ হি*জাবী ভিডিও কালেকশন</li>
+        <ul class="collection-list" style="margin-top: 15px;">
+            <li><i class="fas fa-circle-check"></i> 1/ 1000+ বাচ্চাদের ভিডিও </li>
+            <li><i class="fas fa-circle-check"></i> ২/ ৫০০+ হিজাবী ভিডিও </li>
+            <li><i class="fas fa-circle-check"></i> ৩/ ৫০০+ রে*প ভিডিও </li>
+            <li><i class="fas fa-circle-check"></i> ৪/ 1000+ Bangla Premium Video </li>
+            <li><i class="fas fa-circle-check"></i> ৫/ ২০০+ মা - ছেলে ভিডিও </li>
+            <li><i class="fas fa-circle-check"></i> ৬/ ৭০০+ দেশী ভাইরাল ভিডিও  </li>
         </ul>
     </div>
 
-    <!-- 3. Image Demo Group -->
-    <div class="section-box">
-        <div class="section-title"><i class="fas fa-images"></i> ভিডিও গ্রুপ এর ডেমো</div>
+<div class="rgb-description-box">
+    <div class="shimmer-headline"> বিশেষ দ্রষ্টব্য : নিচে অসংখ্য ডেমো কালেকশন দেওয়া হয়েছে । কেউ আবার এগুলো দেখে হাতের কাজ সেরে ফেলেন না আবার 🫠</div>
+</div>
+<style>
+    :root {
+        --telegram-card: #182533; /* বক্সের ভেতরের ব্যাকগ্রাউন্ড কালার */
+    }
+
+    /* --- Premium RGB & Glowing Box Style --- */
+    .rgb-description-box {
+        position: relative;
+        background-color: var(--telegram-card);
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        overflow: hidden;
+        z-index: 1;
+        width: 100%;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Animated Thick RGB Border Effect */
+    .rgb-description-box::before {
+        content: '';
+        position: absolute;
+        top: -4px; left: -4px; right: -4px; bottom: -4px;
+        background: linear-gradient(45deg, #ff0055, #0099ff, #00ff66, #ffcc00, #ff0055);
+        background-size: 400%;
+        z-index: -1;
+        border-radius: 18px;
+        animation: rgb-glow 12s linear infinite;
+    }
+
+    /* Inner background masking to keep it clean */
+    .rgb-description-box::after {
+        content: '';
+        position: absolute;
+        top: 4px; left: 4px; right: 4px; bottom: 4px;
+        background-color: var(--telegram-card);
+        z-index: -1;
+        border-radius: 12px;
+    }
+
+    @keyframes rgb-glow {
+        0% { background-position: 0 0; }
+        50% { background-position: 300% 0; }
+        100% { background-position: 0 0; }
+    }
+
+    /* Premium Smooth Shimmer Text Effect (চমকানো হেডলাইন) */
+    .shimmer-headline {
+        font-family: 'Hind Siliguri', sans-serif;
+        font-size: 22px;
+        font-weight: 700;
+        text-align: center;
+        background: linear-gradient(to right, #fff 20%, #4facfe 40%, #00f2fe 60%, #fff 80%);
+        background-size: 200% auto;
+        color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+        animation: text-shine 3s linear infinite;
+    }
+
+    @keyframes text-shine {
+        to { background-position: 200% center; }
+    }
+</style>
+
+    <!-- ==================== SERIAL 1: বা*চ্চা*দে*র ভিডিও ==================== -->
+    <div class="rgb-description-box">
+        <div class="shimmer-headline">১. বা*চ্চাদের ভিডিও Demo</div>
+    </div>
+    <div class="content-group-box">
+        <!-- Small Thumbnails -->
         <div class="image-group">
-            <img src="https://i.ibb.co.com/KcBYgVD9/IMG-20260712-160302-382.jpg" alt="Demo Image 1" />
-            <img src="https://i.ibb.co.com/cS29jr1V/IMG-20260712-160302-896.jpg" alt="Demo Image 2" />
+            <img src="https://i.ibb.co.com/KcBYgVD9/IMG-20260712-160302-382.jpg" alt="Demo Image" onclick="openImage(this.src)" />
+            <img src="https://i.ibb.co.com/cS29jr1V/IMG-20260712-160302-896.jpg" alt="Demo Image" onclick="openImage(this.src)" />
         </div>
-    </div>
-
-    <!-- 4. General Video Demo Grid -->
-    <div class="section-box">
-        <div class="section-title"><i class="fas fa-video"></i> ভিডিও গ্রুপ এর ডেমো</div>
+        <!-- Video IFrames -->
         <div class="video-grid">
-            
             <div class="video-card">
-                <div class="video-wrapper" onclick="openVideo('https://www.blogger.com/video.g?token=AD6v5dzwV2wnfI1-pFxo5X1radCeF48PxaJTxoO1cTfb6sN95z9py62eQi8dLbWaMcEQX-TJhmWpBZkZyiQ17gGpxuDSAsmfPpNlQ6T6eejuhJT910KIw8v7VQ7AcLjs1NHGR2ULwcQ&amp;origin=sampleforwork733.blogspot.com')"></div>
-                <div class="video-caption">ডেমো ভিডিও-১</div>
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/PZ1xnZRJ#w-_fdnRV4b_wwRCDG7CVgIY-k2ArwYxwmpIMvjgQ6eo')"></div>
+                <div class="video-caption">ভিডিও-১</div>
             </div>
-
             <div class="video-card">
-                <div class="video-wrapper" onclick="openVideo('https://www.blogger.com/video.g?token=AD6v5dziERDnOV5OoII9ocwi1a0DSLP77GbdzZYlW7wkhL1X2oLQU_8W5RKixLEdUHNxLBvj_9OPB53ZpczSQWwJ_7XQiSsQNeOg4OTgfPSv2ZewZGV1wJqpqcRod2634dC-ySwaFbwc&amp;origin=sampleforwork733.blogspot.com')"></div>
-                <div class="video-caption">ডেমো ভিডিও-২</div>
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/7Q1h2Dwb#BZi7_0yzthZ3j2Rc0fXGFuhxJdDghORmgqd7v1wGP7w')"></div>
+                <div class="video-caption">ভিডিও-২</div>
             </div>
-
             <div class="video-card">
-                <div class="video-wrapper" onclick="openVideo('https://www.blogger.com/video.g?token=AD6v5dxwByCiNQJDgZz5hQ-b2Py_8E41VhQmq2Q91pip3lltJXnjag5Y9LqNXrv6PllEntqFO3Y1mwJBe92bDbZ6_SF-mkAJedY7WsR7jWK1K58JhVYzR9pIGNYgXh7O98w3lM7tWV34&amp;origin=sampleforwork733.blogspot.com')"></div>
-                <div class="video-caption">ডেমো ভিডিও-৩</div>
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/yIcyHAzD#ZngGVyLgqJqRu6SW8Xz4mHbfWS7kZv2cZ-PTI6dl59I')"></div>
+                <div class="video-caption">ভিডিও-৩</div>
             </div>
-
             <div class="video-card">
-                <div class="video-wrapper" onclick="openVideo('https://www.blogger.com/video.g?token=AD6v5dxk0NeOjCN9ZVDUbbNRoFLludif4ZMnc-SxWW62yJdnAN7olp5xUeQAQqBm3M6bjuVjfFiyg_zj6Hr9gYOKSwpJDPSToj4CRZaKUfrv6MgJ8c2CUi9_IzpLppEes6wzKQQTRA&amp;origin=sampleforwork733.blogspot.com')"></div>
-                <div class="video-caption">ডেমো ভিডিও-৪</div>
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/SBsjBCxQ#Gdn_1Zh_qErv3cpVEa4Otus8AIJ0JUpv5D3UsXyWBdE')"></div>
+                <div class="video-caption">ভিডিও-৪</div>
             </div>
-
             <div class="video-card">
-                <div class="video-wrapper" onclick="openVideo('https://www.blogger.com/video.g?token=AD6v5dxdwi3Z8gIN1_xg1Mw0-vcINH7Q2gXQ047OVQEL0cLESukiPWg9tjlKTk5L4ZpuGPiFZsTFFMu7ZvoTILwNn_cY92W_xp-q-HURDx54q-dR4O02s259uOBLB1LYkCtV2qTZxw0&amp;origin=sampleforwork733.blogspot.com')"></div>
-                <div class="video-caption">ডেমো ভিডিও-৫</div>
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/CMN2CYDK#razTpSt2AbKgmb1bsHCrS_AHkCYqjYwZ2v77OBvy2U8')"></div>
+                <div class="video-caption">ভিডিও-৫</div>
             </div>
-
             <div class="video-card">
-                <div class="video-wrapper" onclick="openVideo('https://www.blogger.com/video.g?token=AD6v5dx3Z2YrXFLOdv2D-NNK6HQzd7YalDswK9UzdJER5hB89bNlEoZ0Rr6oBmpiWn9bRpvp22UL5R58_BLImm8WQLbQTI-VOsSlIHMYgwFn7-r0TlJVavCFzYYXxNiy-kMnoQtR6d8&amp;origin=sampleforwork733.blogspot.com')"></div>
-                <div class="video-caption">ডেমো ভিডিও-৬</div>
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/TckxHLQB#vz3oozeSCz0IftWkPur431L9zwbu709z5xaPXPUpDhY')"></div>
+                <div class="video-caption">ভিডিও-৬</div>
             </div>
-
             <div class="video-card">
-                <div class="video-wrapper" onclick="openVideo('https://www.blogger.com/video.g?token=AD6v5dylsbHyk6AsUT2F5PwG9vFJn1lvzumkaTZaZ6BoUg0X6QvrSzfPJiFKGSFO5H1YbPhloHxMR1YT-s9-ne_HM2CLofsIsuVhgfpGWEjAmQomylIvRn-Avawf_AD1hMVode3sRTla&amp;origin=sampleforwork733.blogspot.com')"></div>
-                <div class="video-caption">ডেমো ভিডিও-৭</div>
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/vQUVlDpR#KNHATTsQr4VteyhBFf7u6F1K83Va6LE7uRZubvewXTw')"></div>
+                <div class="video-caption">ভিডিও-৭</div>
             </div>
-
         </div>
     </div>
 
-    <!-- 5. Kids Special Video Demo Grid -->
-    <div class="section-box">
-        <div class="section-title"><i class="fas fa-baby"></i> বাচ্চাদের স্পেশাল ডেমো ভিডিও</div>
+
+    <!-- ==================== SERIAL 2: হি*জা*বী ভিডিও ==================== -->
+    <div class="rgb-description-box">
+        <div class="shimmer-headline">২. হি*জা*বী ভিডিও Demo </div>
+    </div>
+    <div class="content-group-box">
+        <!-- Small Thumbnails -->
+        <div class="image-group">
+            <img src="https://i.ibb.co.com/n8LVc3yM/IMG-20260714-013235-391.jpg" alt="Demo Image" onclick="openImage(this.src)" />
+            <img src="https://i.ibb.co.com/DHKvQ5DW/IMG-20260714-013235-361.jpg" alt="Demo Image" onclick="openImage(this.src)" />
+        </div>
+        <!-- Video IFrames -->
         <div class="video-grid">
-            
             <div class="video-card">
-                <div class="video-wrapper" onclick="openVideo('https://www.blogger.com/video.g?token=AD6v5dxADVhdhaAzgdKD_CaJ_TIISGdHltS6PoeOPdXGlHAar_DDEZgznmzXOYU3pHb2FU07lQTJm2zWDj4PXnUuq98UMXXrddsDWfGKD2ZR4KXH6l50V8Le15IOsi7Xk4xpGYeMHSI&amp;origin=sampleforwork733.blogspot.com')"></div>
-                <div class="video-caption">ডেমো ভিডিও-১</div>
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/iQ1G3BhC#Z-wX6s_xOT6YF_Of2SsucRogt4kGlZatjzEiOTdBvh4')"></div>
+                <div class="video-caption">ভিডিও-১</div>
             </div>
-
             <div class="video-card">
-                <div class="video-wrapper" onclick="openVideo('https://www.blogger.com/video.g?token=AD6v5dwX89MvAGp9bF47wfSmRZpRmWbVIWZQ65sSaZVBHdajWEW8xsbcqxcFfv7heZFV0OZYtW7tmURmj_Aivx7CxalqWTNYBEov3ewpS0o7lHjSGrjQv_CbrimlnmqnM-v5RWcZxe4&amp;origin=sampleforwork733.blogspot.com')"></div>
-                <div class="video-caption">ডেমো ভিডিও-২</div>
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/3M8TACZI#bgALt75pvNatPIdZE-D_LvWPR8YghH15mvJeSQo059Y')"></div>
+                <div class="video-caption">ভিডিও-২</div>
             </div>
-
             <div class="video-card">
-                <div class="video-wrapper" onclick="openVideo('https://www.blogger.com/video.g?token=AD6v5dyf0Neo2j4uy4mtHSjrVfYOXDfPIZNtmo5gjxwG_H5vcQXbnf1kAJEaMqDnFk1O08A6zV16lpHrrO5sNwbs6KitcpKdwrS7pSCWdUDR1u6Td39mwgB1xSG94hw9At11FnGkz7FN&amp;origin=sampleforwork733.blogspot.com')"></div>
-                <div class="video-caption">ডেমো ভিডিও-৩</div>
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/2E9QCaoa#6PShSXzQwBwqZsHuBPNBmB06pPYRbac2t8FRPofezjY')"></div>
+                <div class="video-caption">ভিডিও-৩</div>
             </div>
-
             <div class="video-card">
-                <div class="video-wrapper" onclick="openVideo('https://www.blogger.com/video.g?token=AD6v5dwcYRnaRnSSgPiUCyS9aHyCiJNM9wBXGqbc3SKrVPYXrKjBs7OAtePDxykNIrGaqdGq75nX8sGpQjyc6A_kbrO47PNuGJv2GuHqtqSrYVtRrXOEMuYy8Qqmdty7zwycdWxsrVs&amp;origin=sampleforwork733.blogspot.com')"></div>
-                <div class="video-caption">ডেমো ভিডিও-৪</div>
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/bYVW3ZCL#qFliyYZZr5-ImdVugX98ysEkuYoGdMpLdi-SrEPZ8qA')"></div>
+                <div class="video-caption">ভিডিও-৪</div>
             </div>
-
             <div class="video-card">
-                <div class="video-wrapper" onclick="openVideo('https://www.blogger.com/video.g?token=AD6v5dwEUsY1sh4rIi-6fjUswGoVXDkDWgEhTlEtWYXK0fCo0DSTW0q_L2HlN08mPxepwklcgfpITSwZEWsgmQJNdnfLrSQXdmtxYNGUEQXqUhofulpImN6HQl6toQvRK4MOU6z7ODA&amp;origin=sampleforwork733.blogspot.com')"></div>
-                <div class="video-caption">ডেমো ভিডিও-৫</div>
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/XMMigRzZ#Shu0iLjPXjWH7Equr2Ajm9cWaMGN9sQPt1Vgzh8vREk')"></div>
+                <div class="video-caption">ভিডিও-৫</div>
             </div>
-
             <div class="video-card">
-                <div class="video-wrapper" onclick="openVideo('https://www.blogger.com/video.g?token=AD6v5dxylnLWlRgx3N6-_82kj_rrOd_AppG11YcYneM-7KNA1ZYBoFd6hSxjy919so58q8ZhPkp8TgAnj1kfwa5z_uV20ApXCquYAiO8y-Kplt8srx978j6IqNdPgTVFfYFj7TEvQ824&amp;origin=sampleforwork733.blogspot.com')"></div>
-                <div class="video-caption">ডেমো ভিডিও-৬</div>
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/bQUSWIoI#_vU90YSOq9MC2MWtAiBaDeSPJfIj8dOUWGgh3BnURi4')"></div>
+                <div class="video-caption">ভিডিও-৬</div>
             </div>
-
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/aMEl1LTZ#cLe4MwpapRKLGi2VKQ1_9COQ-IXzcOkrf-fpK42bVUs')"></div>
+                <div class="video-caption">ভিডিও-৭</div>
+            </div>
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/aMEl1LTZ#cLe4MwpapRKLGi2VKQ1_9COQ-IXzcOkrf-fpK42bVUs')"></div>
+                <div class="video-caption">ভিডিও-৭</div>
+            </div>
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/DJFC2LxJ#49nrC7ZJuv0dXjXhxUwKybW4MgrNTrW2-lgjRTJI89o')"></div>
+                <div class="video-caption">ভিডিও-৮</div>
+            </div>
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/bF01hBDC#tnVQqAuV3JqEpTK5ajf056S321N9cOH6orQV2-l84Lw')"></div>
+                <div class="video-caption">ভিডিও-৯</div>
+            </div>
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/3UkH3QLb#xznvM0s4DdDAhLCjvN4cHBoRdXm7bjKNniGRlMfYK3w')"></div>
+                <div class="video-caption">ভিডিও-১০</div>
+            </div>
         </div>
     </div>
 
-    <!-- 6 & 7. Pricing Details Box -->
+
+    <!-- ==================== SERIAL 3: রে*প ভিডিও ==================== -->
+    <div class="rgb-description-box">
+        <div class="shimmer-headline">৩. রে*প ভিডিও Demo </div>
+    </div>
+    <div class="content-group-box">
+        <!-- Small Thumbnails -->
+        <div class="image-group">
+            <img src="https://i.ibb.co.com/YFpKt4kC/IMG-20260714-013204-558.jpg" alt="Demo Image" onclick="openImage(this.src)" />
+            <img src="https://i.ibb.co.com/Q7y9T93Y/IMG-20260714-013205-039.jpg" alt="Demo Image" onclick="openImage(this.src)" />
+        </div>
+        <!-- Video IFrames -->
+        <div class="video-grid">
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/XEUDWQiL#lVve-MoJu8JE0N_r-sm6Yy5-wznbgpIC7_GFkDRmM00')"></div>
+                <div class="video-caption">ভিডিও-১</div>
+            </div>
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/KcEjQTDJ#o_VhGRhudIP3Pr26SOKGFU_yOWHq-2jea_DI5W8VBLU')"></div>
+                <div class="video-caption">ভিডিও-২</div>
+            </div>
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/mEcERa4B#zPcPWjW1M1lyVv7faak9VJPl2bGfeALfm5_D19ZBO1g')"></div>
+                <div class="video-caption">ভিডিও-৩</div>
+            </div>
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/KQEyyLzI#8DuUcFOr2BJtUix1S7iJuCaniR8I61D__zGzlSMEkBE')"></div>
+                <div class="video-caption">ভিডিও-৪</div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==================== SERIAL 4: Bangla Premium ==================== -->
+    <div class="rgb-description-box">
+        <div class="shimmer-headline">৪. Bangla Premium Deno </div>
+    </div>
+    <div class="content-group-box">
+        <!-- Small Thumbnails -->
+        <div class="image-group">
+            <img src="https://i.ibb.co.com/HDtvC87D/IMG-20260714-013144-291.jpg" alt="Demo Image" onclick="openImage(this.src)" />
+            <img src="https://i.ibb.co.com/YFmVBc0z/IMG-20260714-013144-573.jpg" alt="Demo Image" onclick="openImage(this.src)" />
+        </div>
+        <!-- Video IFrames -->
+        <div class="video-grid">
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/bB9AXKJA#AJ6_cXBc1PSgDH2PBy8UrSKIOFfsUnbsTEdTHTVNH4U')"></div>
+                <div class="video-caption">ভিডিও-১</div>
+            </div>
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/yR8ByDaB#DZLvuAwDdMJDN8xXKLYTJhh9m78_4WdEOXM-PSyTZGk')"></div>
+                <div class="video-caption">ভিডিও-২</div>
+            </div>
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/PBMnTAzb#LMcAqrqmocZ8agT2VtUdUX9av-8HOuqRZrl03OVPOUU')"></div>
+                <div class="video-caption">ভিডিও-৩</div>
+            </div>
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/mUsxAS7Z#DIg0NqfWlDHzzwkvUVVrXYR4eIdnveW9c6qfEwVQoNk')"></div>
+                <div class="video-caption">ভিডিও-৪</div>
+            </div>
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/TZlwRbxC#VdquErZMxL_QKiALSXkTLy2wz1Sh6-O8Oepp98kxc84')"></div>
+                <div class="video-caption">ভিডিও-৫</div>
+            </div>
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/WQMEkRDa#LZoGbUCX2ggMr7ZHZldwmhKJdIwmBvfbnf7b-S_oMPI')"></div>
+                <div class="video-caption">ভিডিও-৬</div>
+            </div>
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/XVE22IpD#CcF7adhkmtgv3nEymFcZidmw920l2B2Jmm7mEl9o3BI')"></div>
+                <div class="video-caption">ভিডিও-৭</div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==================== SERIAL 5: মা-ছেলে প্রিমিয়াম ==================== -->
+    <div class="rgb-description-box">
+        <div class="shimmer-headline">৫. মা-ছেলে প্রিমিয়াম Demo </div>
+    </div>
+    <div class="content-group-box">
+        <!-- Small Thumbnails -->
+        <div class="image-group">
+            <img src="https://i.ibb.co.com/ch6G3FwF/IMG-20260714-013130-211.jpg" alt="Demo Image" onclick="openImage(this.src)" />
+            <img src="https://i.ibb.co.com/1tBWqfyH/IMG-20260714-013129-978.jpg" alt="Demo Image" onclick="openImage(this.src)" />
+        </div>
+        <!-- Video IFrames -->
+        <div class="video-grid">
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/KM9UlaiZ#JqOJMQYXXgiuGzTmIxCEBrm2C06bsZgsEmObqe08MSc')"></div>
+                <div class="video-caption">ভিডিও-১</div>
+            </div>
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/uAcFTLwC#tuoSGcdvT0ddSAefKyC9vAaKZsBBsjwFgBdiC0o43tM')"></div>
+                <div class="video-caption">ভিডিও-২</div>
+            </div>
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/OElBCR6T#1U8_ar9ivDNwk58fhgCFvBcmI-P26OirHSi0CRC-KZ4')"></div>
+                <div class="video-caption">ভিডিও-৩</div>
+            </div>
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/Gd1xRQJZ#CViNXlwwVMWxWjrNnPRhIco0AMpyKGMMENfP02evO5k')"></div>
+                <div class="video-caption">ভিডিও-৪</div>
+            </div>
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/7JkXCYQK#-PW_Mqb13Eijz0oP7DOxhr_snnSX4EoEecT3xWIp9PI')"></div>
+                <div class="video-caption">ভিডিও-৫</div>
+            </div>
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/CQsUiCpb#zkmzzhM3KR-tbfPqJ2Pqsej-asVk7gHyN7DfSp7bwro')"></div>
+                <div class="video-caption">ভিডিও-৬</div>
+            </div>
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/mIch3Kpb#vTtKr7hO7dFq4GBlxV3JG5LZlfG02amBZsBeCWdrrkE')"></div>
+                <div class="video-caption">ভিডিও-৭</div>
+            </div>
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/XVszSIra#5ruUGemyZtkcPjGIn17BU06vY8k3Zs-1lq7nIfEnPZw')"></div>
+                <div class="video-caption">ভিডিও-৮</div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==================== SERIAL 6: VIP Premium ==================== -->
+    <div class="rgb-description-box">
+        <div class="shimmer-headline">৬. VIP Premium Demo </div>
+    </div>
+    <div class="content-group-box">
+        <!-- Small Thumbnails -->
+        <div class="image-group">
+            <img src="https://i.ibb.co.com/0z6cbz7/IMG-20260714-013113-981.jpg" alt="Demo Image" onclick="openImage(this.src)" />
+            <img src="https://i.ibb.co.com/xqQJ8V2s/IMG-20260714-013113-224.jpg" alt="Demo Image" onclick="openImage(this.src)" />
+        </div>
+        <!-- Video IFrames -->
+        <div class="video-grid">
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/fMkykT7Q#2AnvjxNvIqAE6efJLaFheJ3Fh9cfxIXp3i3H5xkTriY')"></div>
+                <div class="video-caption">ভিডিও-১</div>
+            </div>
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/zQMwRAiC#-RqOAhiyAZUaJI1nabujabY9oE00_nthodmfZ3r1LZI')"></div>
+                <div class="video-caption">ভিডিও-২</div>
+            </div>
+            <div class="video-card">
+                <div class="video-wrapper" onclick="openVideo('https://mega.nz/embed/iQ8SXCJR#I5Bq5Zz0u1fHE8s8NexXVzh-r9oARKVSKkfPfGWzzkI')"></div>
+                <div class="video-caption">ভিডিও-৩</div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Pricing Details Box -->
     <div class="section-box pricing-box">
         <div class="price-title">লাইফটাইম ভিডিও প্যাকেজ মাত্র ৪৯৯ টাকা</div>
         <div class="price-sub">সীমাবদ্ধ সময়ের অফার! এখনই বুক করুন।</div>
-        <a href="https://t.me/Genghis_Khan5?text=%E0%A6%86%E0%A6%AE%E0%A6%BF%20%E0%A6%B2%E0%A6%BE%E0%A6%87%E0%A6%AB%E0%A6%9F%E0%A6%BE%E0%A6%8Thread%20%E0%A6%AA%E0%A7%8Props%E0%A6%95%E0%A7%87%E0%A6%9C%20%E0%A6%95%E0%A6%BF%E0%A6%A8%E0%A6%A4%E0%A7%87%20%E0%A6%9A%E0%A6%BE%E0%A6%8Blocks" class="btn" target="_blank">
+        <a href="https://telegram.dog/GENGHIS_KHA_N?আমি প্যাকেজটি কিনতে চাই" class="btn" target="_blank">
             <i class="fas fa-shopping-cart"></i> কেনার জন্য ক্লিক করুন
         </a>
     </div>
 
-    <!-- 9. View Counter Area -->
+    <!-- View Counter Area -->
     <div class="footer-counter">
         <div align=center><a href='https://www.counter12.com'><img src='https://www.counter12.com/img-7c9Z9YD180Wa0a01-61.gif' border='0' alt='conter12'></a><script type='text/javascript' src='https://www.counter12.com/ad.js?id=7c9Z9YD180Wa0a01'></script></div>
     </div>
 
 </div>
 
-<!-- Lightbox Modal Screen -->
-<div class="modal" id="videoModal" onclick="closeVideo()">
-    <div class="modal-content" onclick="event.stopPropagation()">
-        <span class="close-modal" onclick="closeVideo()">&times;</span>
-        <div id="modalVideoContainer" style="width:100%; height:100%;"></div>
+<!-- Lightbox Modal Screen (Supports Both Image & Fullscreen Iframe) -->
+<div class="modal" id="mediaModal" onclick="closeMedia()">
+    <div class="modal-content" id="modalContentBox" onclick="event.stopPropagation()">
+        <span class="close-modal" onclick="closeMedia()">&times;</span>
+        <div id="modalContainer" style="width:100%; height:100%; display:flex; justify-content:center; align-items:center;"></div>
     </div>
 </div>
 
 <script>
+    const modal = document.getElementById('mediaModal');
+    const contentBox = document.getElementById('modalContentBox');
+    const container = document.getElementById('modalContainer');
+
+    // Dynamic Video Popup Player
     function openVideo(videoUrl) {
-        const modal = document.getElementById('videoModal');
-        const container = document.getElementById('modalVideoContainer');
+        contentBox.classList.remove('img-mode'); // Reset ratio for 16:9 video
         container.innerHTML = `<iframe src="${videoUrl}" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>`;
         modal.style.display = 'flex';
     }
 
-    function closeVideo() {
- 
+    // Dynamic Image Popup Zoom
+    function openImage(imgSrc) {
+        contentBox.classList.add('img-mode'); // Adaptive size for standard image aspect ratio
+        container.innerHTML = `<img src="${imgSrc}" alt="Zoomed View" />`;
+        modal.style.display = 'flex';
+    }
+
+    // Modal Closure Handler
+    function closeMedia() {
+        container.innerHTML = ''; // Instantly cuts iframe connections/sound
+        modal.style.display = 'none';
+    }
+</script>
+
+</body>
+</html>
